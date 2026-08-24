@@ -18,3 +18,11 @@ export function AdminRoute() {
   return <Outlet />
 }
 
+export function ContributorRoute() {
+  const { session, profile, loading } = useAuth()
+  const location = useLocation()
+  if (loading) return <LoadingScreen />
+  if (!session) return <Navigate to={`/contributor/login?returnTo=${encodeURIComponent(location.pathname)}`} replace />
+  if (profile?.role !== 'contributor' || profile.status !== 'active') return <Navigate to="/unauthorized" replace />
+  return <Outlet />
+}

@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import { AdminRoute, ManagementRoute } from './components/ProtectedRoute'
+import { AdminRoute, ContributorRoute, ManagementRoute } from './components/ProtectedRoute'
 import { ManagementLayout } from './layouts/ManagementLayout'
 import { DashboardPage } from './pages/DashboardPage'
 import { EventsPage } from './pages/EventsPage'
@@ -16,6 +16,12 @@ import { EventSearchPage } from './pages/EventSearchPage'
 import { PublicExhibitorPage } from './pages/PublicExhibitorPage'
 import { StatusPage } from './pages/StatusPage'
 import { UsersPage } from './pages/UsersPage'
+import { ContributorLoginPage } from './pages/ContributorLoginPage'
+import { MyFeedbackPage } from './pages/MyFeedbackPage'
+import { AdvertisingEnquiryPage } from './pages/AdvertisingEnquiryPage'
+import { ContributorProfilePage } from './pages/ContributorProfilePage'
+import { ModerationPage } from './pages/ModerationPage'
+import { SubmissionsPage } from './pages/SubmissionsPage'
 
 export default function App() {
   return <Routes>
@@ -23,6 +29,8 @@ export default function App() {
     <Route path="/e/:slug" element={<EventSearchPage />} />
     <Route path="/e/:slug/exhibitors/:publicId" element={<PublicExhibitorPage />} />
     <Route path="/login" element={<LoginPage />} />
+    <Route path="/contributor/login" element={<ContributorLoginPage />} />
+    <Route element={<ContributorRoute />}><Route path="/my-feedback" element={<MyFeedbackPage/>}/><Route path="/advertising" element={<AdvertisingEnquiryPage/>}/><Route path="/profile" element={<ContributorProfilePage/>}/></Route>
     <Route path="/unauthorized" element={<StatusPage />} />
     <Route element={<ManagementRoute />}><Route path="/manage" element={<ManagementLayout />}>
       <Route index element={<DashboardPage />} />
@@ -33,12 +41,12 @@ export default function App() {
       <Route path="events/:eventId/exhibitors/new" element={<ExhibitorFormPage />} />
       <Route path="events/:eventId/exhibitors/:exhibitorId" element={<ExhibitorFormPage />} />
       <Route path="events/:eventId/tags" element={<TagsPage />} />
-      <Route path="moderation" element={<PlaceholderPage title="Moderation" />} />
+      <Route path="moderation" element={<ModerationPage />} />
       <Route element={<AdminRoute />}>
         <Route path="users" element={<UsersPage />} />
         <Route path="events/new" element={<EventFormPage mode="create" />} />
         <Route path="events/:eventId/import" element={<ImportPage />} />
-        <Route path="submissions" element={<PlaceholderPage title="Submissions" />} />
+        <Route path="submissions" element={<SubmissionsPage />} />
         <Route path="audit" element={<PlaceholderPage title="Audit log" />} />
       </Route>
     </Route></Route>

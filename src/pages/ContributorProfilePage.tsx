@@ -1,0 +1,7 @@
+import { Save } from 'lucide-react'
+import { useState, type FormEvent } from 'react'
+import { Link } from 'react-router-dom'
+import { Brand } from '../components/Brand'
+import { supabase } from '../lib/supabase'
+import { useAuth } from '../providers/AuthProvider'
+export function ContributorProfilePage(){const {profile,refreshProfile,signOut}=useAuth();const [name,setName]=useState(profile?.display_name??'');const [message,setMessage]=useState('');async function submit(e:FormEvent){e.preventDefault();const {error}=await supabase.rpc('update_my_display_name',{p_display_name:name});setMessage(error?error.message:'Profile saved.');if(!error)await refreshProfile()}return <main className="min-h-screen bg-[#f4f7f9]"><header className="border-b bg-white"><div className="mx-auto flex max-w-3xl items-center justify-between px-5 py-4"><Brand/><Link className="btn-secondary" to="/my-feedback">My feedback</Link></div></header><section className="mx-auto max-w-3xl px-5 py-10"><h1 className="text-3xl font-black text-[#0b2940]">Contributor profile</h1><form onSubmit={submit} className="card mt-7 p-6"><label><span className="label">Profile name</span><input className="field" minLength={2} maxLength={80} required value={name} onChange={e=>setName(e.target.value)}/></label>{message&&<p className="mt-4 text-sm">{message}</p>}<button className="btn-primary mt-5"><Save size={17}/>Save profile</button><button type="button" className="btn-secondary ml-3" onClick={()=>void signOut()}>Sign out</button></form></section></main>}
