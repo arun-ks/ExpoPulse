@@ -12,12 +12,16 @@ import { TagsPage } from './pages/TagsPage'
 import { LoginPage } from './pages/LoginPage'
 import { PlaceholderPage } from './pages/PlaceholderPage'
 import { PublicHome } from './pages/PublicHome'
+import { EventSearchPage } from './pages/EventSearchPage'
+import { PublicExhibitorPage } from './pages/PublicExhibitorPage'
 import { StatusPage } from './pages/StatusPage'
 import { UsersPage } from './pages/UsersPage'
 
 export default function App() {
   return <Routes>
     <Route path="/" element={<PublicHome />} />
+    <Route path="/e/:slug" element={<EventSearchPage />} />
+    <Route path="/e/:slug/exhibitors/:publicId" element={<PublicExhibitorPage />} />
     <Route path="/login" element={<LoginPage />} />
     <Route path="/unauthorized" element={<StatusPage />} />
     <Route element={<ManagementRoute />}><Route path="/manage" element={<ManagementLayout />}>
