@@ -21,5 +21,7 @@ export interface EventSummary {
   end_at: string
   lock_at: string
   visible_until: string
+  timezone: string
+  asset_path: string | null
+  slug_locked_at?: string | null
 }
-
