@@ -10,7 +10,6 @@ import { ExhibitorFormPage } from './pages/ExhibitorFormPage'
 import { ImportPage } from './pages/ImportPage'
 import { TagsPage } from './pages/TagsPage'
 import { LoginPage } from './pages/LoginPage'
-import { PlaceholderPage } from './pages/PlaceholderPage'
 import { PublicHome } from './pages/PublicHome'
 import { EventSearchPage } from './pages/EventSearchPage'
 import { PublicExhibitorPage } from './pages/PublicExhibitorPage'
@@ -22,6 +21,7 @@ import { AdvertisingEnquiryPage } from './pages/AdvertisingEnquiryPage'
 import { ContributorProfilePage } from './pages/ContributorProfilePage'
 import { ModerationPage } from './pages/ModerationPage'
 import { SubmissionsPage } from './pages/SubmissionsPage'
+import { AuditLogPage } from './pages/AuditLogPage'
 
 export default function App() {
   return <Routes>
@@ -47,7 +47,7 @@ export default function App() {
         <Route path="events/new" element={<EventFormPage mode="create" />} />
         <Route path="events/:eventId/import" element={<ImportPage />} />
         <Route path="submissions" element={<SubmissionsPage />} />
-        <Route path="audit" element={<PlaceholderPage title="Audit log" />} />
+        <Route path="audit" element={<AuditLogPage />} />
       </Route>
     </Route></Route>
     <Route path="*" element={<StatusPage title="Page not found" message="The page you requested does not exist or is no longer available." />} />
