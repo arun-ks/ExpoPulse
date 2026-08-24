@@ -5,6 +5,10 @@ import { DashboardPage } from './pages/DashboardPage'
 import { EventsPage } from './pages/EventsPage'
 import { EventDetailPage } from './pages/EventDetailPage'
 import { EventFormPage } from './pages/EventFormPage'
+import { ExhibitorsPage } from './pages/ExhibitorsPage'
+import { ExhibitorFormPage } from './pages/ExhibitorFormPage'
+import { ImportPage } from './pages/ImportPage'
+import { TagsPage } from './pages/TagsPage'
 import { LoginPage } from './pages/LoginPage'
 import { PlaceholderPage } from './pages/PlaceholderPage'
 import { PublicHome } from './pages/PublicHome'
@@ -21,10 +25,15 @@ export default function App() {
       <Route path="events" element={<EventsPage />} />
       <Route path="events/:eventId" element={<EventDetailPage />} />
       <Route path="events/:eventId/edit" element={<EventFormPage mode="edit" />} />
+      <Route path="events/:eventId/exhibitors" element={<ExhibitorsPage />} />
+      <Route path="events/:eventId/exhibitors/new" element={<ExhibitorFormPage />} />
+      <Route path="events/:eventId/exhibitors/:exhibitorId" element={<ExhibitorFormPage />} />
+      <Route path="events/:eventId/tags" element={<TagsPage />} />
       <Route path="moderation" element={<PlaceholderPage title="Moderation" />} />
       <Route element={<AdminRoute />}>
         <Route path="users" element={<UsersPage />} />
         <Route path="events/new" element={<EventFormPage mode="create" />} />
+        <Route path="events/:eventId/import" element={<ImportPage />} />
         <Route path="submissions" element={<PlaceholderPage title="Submissions" />} />
         <Route path="audit" element={<PlaceholderPage title="Audit log" />} />
       </Route>
