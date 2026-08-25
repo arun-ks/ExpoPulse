@@ -23,5 +23,7 @@ export interface EventSummary {
   visible_until: string
   timezone: string
   asset_path: string | null
+  website_url: string | null
+  description: string | null
   slug_locked_at?: string | null
 }
