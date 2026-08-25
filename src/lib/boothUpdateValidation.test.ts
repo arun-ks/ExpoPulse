@@ -1,0 +1,3 @@
+import {describe,expect,it} from 'vitest'
+import {validateBoothUpdate} from './boothUpdateValidation'
+describe('validateBoothUpdate',()=>{it('accepts replacements and an explicit clear',()=>{expect(validateBoothUpdate([{companyName:'Alpha',boothIds:['a-01']},{companyName:'Beta',boothIds:[]}])).toEqual([])});it('requires boothIds',()=>{expect(validateBoothUpdate([{companyName:'Alpha'}])).toContain('Entry 1: boothIds is required.')} );it('rejects duplicate booths across companies',()=>{expect(validateBoothUpdate([{companyName:'Alpha',boothIds:['A01']},{companyName:'Beta',boothIds:['a01']}])[0]).toContain('multiple companies')})})

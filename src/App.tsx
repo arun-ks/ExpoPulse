@@ -22,6 +22,7 @@ import { ContributorProfilePage } from './pages/ContributorProfilePage'
 import { ModerationPage } from './pages/ModerationPage'
 import { SubmissionsPage } from './pages/SubmissionsPage'
 import { AuditLogPage } from './pages/AuditLogPage'
+import { BoothUpdatePage } from './pages/BoothUpdatePage'
 
 export default function App() {
   return <Routes>
@@ -46,6 +47,7 @@ export default function App() {
         <Route path="users" element={<UsersPage />} />
         <Route path="events/new" element={<EventFormPage mode="create" />} />
         <Route path="events/:eventId/import" element={<ImportPage />} />
+        <Route path="events/:eventId/booth-update" element={<BoothUpdatePage />} />
         <Route path="submissions" element={<SubmissionsPage />} />
         <Route path="audit" element={<AuditLogPage />} />
       </Route>
