@@ -1,32 +1,54 @@
 import { Chrome, Linkedin, LoaderCircle, LogIn } from 'lucide-react'
 import { Navigate, useSearchParams } from 'react-router-dom'
 import { useState } from 'react'
-import type { Provider } from '@supabase/supabase-js'
 import { Brand } from '../components/Brand'
+import {
+  contributorOAuthErrorMessage,
+  contributorOAuthProviderKey,
+  isContributorOAuthProvider,
+  type ContributorOAuthProvider,
+} from '../lib/contributorOAuth'
 import { safeReturnPath } from '../lib/navigation'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../providers/AuthProvider'
 
+function storedOAuthProvider() {
+  try {
+    const value = window.sessionStorage.getItem(contributorOAuthProviderKey)
+    return isContributorOAuthProvider(value) ? value : null
+  } catch {
+    return null
+  }
+}
+
 export function ContributorLoginPage() {
   const { session, profile } = useAuth()
   const [params] = useSearchParams()
-  const [error, setError] = useState('')
-  const [pendingProvider, setPendingProvider] = useState<Provider | null>(null)
+  const returnedError = params.get('error_description') || params.get('error') || ''
+  const [error, setError] = useState(() => contributorOAuthErrorMessage(returnedError, storedOAuthProvider()))
+  const [pendingProvider, setPendingProvider] = useState<ContributorOAuthProvider | null>(null)
   const returnTo = safeReturnPath(params.get('returnTo') || '/my-feedback')
 
   if (session && profile) {
     return <Navigate to={profile.role === 'contributor' ? returnTo : '/unauthorized'} replace />
   }
 
-  async function signIn(provider: Provider) {
+  async function signIn(provider: ContributorOAuthProvider) {
     setError('')
     setPendingProvider(provider)
+    try {
+      window.sessionStorage.setItem(contributorOAuthProviderKey, provider)
+    } catch {
+      // OAuth still works when session storage is unavailable.
+    }
+    const callbackUrl = new URL('/contributor/login', window.location.origin)
+    callbackUrl.searchParams.set('returnTo', returnTo)
     const { error: signInError } = await supabase.auth.signInWithOAuth({
       provider,
-      options: { redirectTo: `${window.location.origin}${returnTo}` },
+      options: { redirectTo: callbackUrl.toString() },
     })
     if (signInError) {
-      setError(signInError.message)
+      setError(contributorOAuthErrorMessage(signInError.message, provider))
       setPendingProvider(null)
     }
   }
